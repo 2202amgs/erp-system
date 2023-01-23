@@ -10,6 +10,7 @@ import 'package:frontend/presentation/main/controllers/client_controller.dart';
 import 'package:frontend/presentation/main/controllers/dashboard_controller.dart';
 import 'package:frontend/presentation/main/controllers/empmoney_controller.dart';
 import 'package:frontend/presentation/main/controllers/expenses_controller.dart';
+import 'package:frontend/presentation/main/controllers/polices_controller.dart';
 import 'package:frontend/presentation/main/controllers/safe_controller.dart';
 import 'package:frontend/presentation/main/controllers/shipments_controller.dart';
 import 'package:frontend/presentation/main/controllers/supplier_controller.dart';
@@ -29,6 +30,7 @@ class AppBinding extends Bindings {
     Get.put(AuthController());
     Get.put(UserController());
     Get.put(ShipmentsController());
+    Get.put(PolicyController());
     Get.put(CarController());
     Get.put(ClientController());
     Get.put(SupplierController());

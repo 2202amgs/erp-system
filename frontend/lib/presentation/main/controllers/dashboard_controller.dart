@@ -4,6 +4,7 @@ import 'package:frontend/presentation/main/view/screens/cars_screen.dart';
 import 'package:frontend/presentation/main/view/screens/client_screen.dart';
 import 'package:frontend/presentation/main/view/screens/expenses_screen.dart';
 import 'package:frontend/presentation/main/view/screens/home_screen.dart';
+import 'package:frontend/presentation/main/view/screens/polices_screen.dart';
 import 'package:frontend/presentation/main/view/screens/safe_screen.dart';
 import 'package:frontend/presentation/main/view/screens/shipments_screen.dart';
 import 'package:frontend/presentation/main/view/screens/supplier_screen.dart';
@@ -17,6 +18,7 @@ class DashboardController extends GetxController {
   List<Widget> dashboardScreens = const [
     HomeScreen(),
     ShipmentsScreen(),
+    PolicesScreen(),
     CarsScreen(),
     ClientScreen(),
     SupplierScreen(),

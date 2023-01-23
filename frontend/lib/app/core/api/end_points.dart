@@ -14,4 +14,5 @@ class EndPoint {
   static String buyGoods = 'buy-goods/';
   static String empMoney = 'emp-money/';
   static String expenses = 'expenses/';
+  static String polices = 'polices/';
 }

@@ -19,7 +19,7 @@ class CustomDataTable extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: DataTable(
-          columnSpacing: 20,
+          // columnSpacing: 20,
           // border: TableBorder.all(color: Colors.white, width: .1),
           showCheckboxColumn: false,
           headingRowColor:
