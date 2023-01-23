@@ -1,0 +1,87 @@
+import 'package:flutter/material.dart';
+import 'package:frontend/app/core/utils/custom_dialog.dart';
+import 'package:frontend/app/core/utils/custom_table.dart';
+import 'package:frontend/data/models/single_expenses_model.dart';
+import 'package:frontend/presentation/main/controllers/transfer_controller.dart';
+import 'package:frontend/presentation/main/view/widgets/transfer/transfer_form.dart';
+import 'package:frontend/presentation/single/controllers/single_expenses_controller.dart';
+import 'package:get/get.dart';
+
+class SingleExpensesTransferTable extends StatelessWidget {
+  SingleExpensesTransferTable({Key? key}) : super(key: key);
+  final SingleExpensesController controller = Get.find();
+  final TransferController _transferController = Get.find();
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: CustomDataTable(
+        columns: ['التاريخ', 'الوصف', 'مدين', 'دائن']
+            .map((e) => DataColumn(label: Text(e)))
+            .toList(),
+        rows: _listOfTransfers(context),
+      ),
+    );
+  }
+
+  // Generate List Of Shipments
+  List<DataRow> _listOfTransfers(BuildContext context) {
+    SingleExpensesModel scm = controller.singleExpensesModel!;
+    return [
+      ...List.generate(
+        scm.transfers!.length,
+        (index) => DataRow(
+          color: MaterialStateProperty.all(
+            scm.transfers![index].senderId ==
+                    controller.singleExpensesModel!.expenses!.id
+                ? Theme.of(context).canvasColor
+                : Theme.of(context).scaffoldBackgroundColor,
+          ),
+          cells: [
+            DataCell(Text(scm.transfers![index].date!.substring(0, 10))),
+            DataCell(Text(scm.transfers![index].description!)),
+            DataCell(Text(
+              scm.transfers![index].receiverId == controller.expensesId
+                  ? scm.transfers![index].amount!.toString()
+                  : "0",
+            )),
+            DataCell(Text(
+              scm.transfers![index].senderId == controller.expensesId
+                  ? scm.transfers![index].amount!.toString()
+                  : "0",
+            )),
+          ],
+          onLongPress: () => _onDelete(context, index),
+          onSelectChanged: (value) => _onEdit(context, index),
+        ),
+      ),
+    ];
+  }
+
+  // Delete Form Show
+  void _onDelete(BuildContext context, int index) {
+    SingleExpensesModel scm = controller.singleExpensesModel!;
+    CustomDialog().remove(
+      context: context,
+      title: "حذف الدفعة",
+      confirm: () async {
+        await _transferController.deleteTransfer(scm.transfers![index].id!);
+        controller.getSingleExpenses();
+      },
+    );
+  }
+
+  // Edit Form Show
+  void _onEdit(BuildContext context, int index) {
+    SingleExpensesModel scm = controller.singleExpensesModel!;
+    _transferController.modelToController(scm.transfers![index]);
+    CustomDialog().set(
+      context: context,
+      title: 'تعديل الدفعة',
+      confirm: () async {
+        await _transferController.transferUpdate(scm.transfers![index]);
+        controller.getSingleExpenses();
+      },
+      body: TransferForm(),
+    );
+  }
+}
