@@ -43,6 +43,7 @@ app.use('/api/employees', employeesRoutes);
 app.use('/api/emp-money', empMoneyRoutes);
 app.use('/api/expenses', expensesRoutes);
 
+mongoose.set('strictQuery', false);
 // Database Initialize
 mongoose.connect(process.env.MONGO_URL, {
 	useNewUrlParser: true,
